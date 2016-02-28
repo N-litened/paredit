@@ -5,9 +5,9 @@ try:
 except:
 	import shared
 
-def paredit_move(view, edit, direction):
+def paredit_move(view, edit, direction, select=False):
 	def f(region):
-		if not region.a == region.b:
+		if select and not region.a == region.b:
 			return region
 
 		point = region.a
@@ -42,13 +42,24 @@ def paredit_move(view, edit, direction):
 		else:
 			return point
 
-	shared.edit_selections(view, f)
+	def f_select(region):
+		anchor = region if region is int else region.a
+		target = region if region is int else region.b
+		return sublime.Region(anchor, f(sublime.Region(target, target)))
+
+	shared.edit_selections(view, f_select if select else f)
 
 def paredit_forward(view, edit):
 	paredit_move(view, edit, "forward")
 
+def paredit_forward_select(view, edit):
+	paredit_move(view, edit, "forward", select=True)
+
 def paredit_backward(view, edit):
 	paredit_move(view, edit, "backward")
+
+def paredit_backward_select(view, edit):
+	paredit_move(view, edit, "backward", select=True)
 
 def paredit_forward_up(view, edit):
 	def f(region):
@@ -98,9 +109,17 @@ class Paredit_forwardCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		paredit_forward(self.view, edit)
 
+class Paredit_forward_selectCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		paredit_forward_select(self.view, edit)
+
 class Paredit_backwardCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		paredit_backward(self.view, edit)
+
+class Paredit_backward_selectCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		paredit_backward_select(self.view, edit)
 
 class Paredit_forward_upCommand(sublime_plugin.TextCommand):
 	def run(self, edit):

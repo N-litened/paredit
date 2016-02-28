@@ -95,6 +95,16 @@
 	"context": [{"key": "should_paredit"}]
  }
 ,{
+	"keys": ["ctrl+alt+shift+f"],
+	"command": "paredit_forward_select",
+	"context": [{"key": "should_paredit"}]
+ }
+,{
+	"keys": ["ctrl+alt+shift+b"],
+	"command": "paredit_backward_select",
+	"context": [{"key": "should_paredit"}]
+ }
+,{
 	"keys": ["ctrl+alt+n"],
 	"command": "paredit_forward_up",
 	"context": [{"key": "should_paredit"}]
