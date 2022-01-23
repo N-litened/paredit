@@ -13,7 +13,7 @@ def paredit_slurp_sexp(view, edit, direction):
 			return region
 		point = region.a
 
-		(a_exp, b_exp) = shared.get_expression(view, point, direction)
+		(a_exp, b_exp) = shared.get_expression(view, point, direction, True)
 
 		if shared.truthy(a_exp, b_exp):
 			(anext_exp, bnext_exp) = shared.get_next_expression(view, b_exp, True, direction)
@@ -40,7 +40,7 @@ def paredit_barf_sexp(view, edit, direction):
 			return region
 		point = region.a
 
-		(a_exp, b_exp) = shared.get_expression(view, point, direction)
+		(a_exp, b_exp) = shared.get_expression(view, point, direction, True)
 
 		if shared.truthy(a_exp, b_exp):
 			(anext_exp, bnext_exp) = reversed(shared.get_next_expression(
