@@ -69,6 +69,8 @@ def paredit_forward_up(view, edit):
 		(a, b) = shared.get_expression(view, region.a)
 		if b:
 			return b
+		else:
+			return region
 
 	shared.edit_selections(view, f)
 
@@ -80,6 +82,8 @@ def paredit_forward_down(view, edit):
 		(a, b) = shared.get_next_expression(view, region.a, skip_words=True)
 		if a:
 			return a + 1
+		else:
+			return region
 
 	shared.edit_selections(view, f)
 
@@ -91,6 +95,8 @@ def paredit_backward_up(view, edit):
 		(a, b) = shared.get_expression(view, region.a)
 		if a:
 			return a
+		else:
+			return region
 
 	shared.edit_selections(view, f)
 
@@ -102,6 +108,8 @@ def paredit_backward_down(view, edit):
 		(a, b) = shared.get_previous_expression(view, region.a - 1, skip_words=True)
 		if b:
 			return b - 1
+		else:
+			return region
 
 	shared.edit_selections(view, f)
 
